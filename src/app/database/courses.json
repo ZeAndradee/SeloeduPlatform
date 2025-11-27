@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "Introdução ao Angular",
+    "description": "Aprenda o básico do framework Angular.",
+    "progress": 0,
+    "imageUrl": "https://ionic.io/blog/wp-content/uploads/2024/02/angular-feature-image-1-1024x512.png"
+  },
+  {
+    "id": 2,
+    "title": "TypeScript Avançado",
+    "description": "Mergulhe fundo nos recursos do TypeScript.",
+    "progress": 0,
+    "imageUrl": "https://wearedevelopers.imgix.net/magazine/articles/554/images/hero/odPaQHSbArSIFzZbUzlE-1740483365.jpeg?w=720&auto=compress,format"
+  },
+  {
+    "id": 3,
+    "title": "Fundamentos de Web Design",
+    "description": "Domine a arte do design UI/UX.",
+    "progress": 0,
+    "imageUrl": "https://elementor.com/cdn-cgi/image/f=auto,w=2560,h=1343/blog/wp-content/uploads/2022/03/2022_02_blog_cover_How-To-Create-a-Web-Design-Workflow_2022_02_blog_cover_How-To-Create-a-Web-Design-Workflow_1200_630_no_text-scaled.jpg"
+  }
+]

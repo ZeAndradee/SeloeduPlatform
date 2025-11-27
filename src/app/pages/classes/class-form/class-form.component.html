@@ -1,0 +1,85 @@
+<div class="form-container">
+  <div class="header">
+    <div class="header-content">
+      <h1 class="title">{{ isEditMode ? "Editar Turma" : "Nova Turma" }}</h1>
+      <p class="subtitle" *ngIf="course">{{ course.title }}</p>
+    </div>
+    <a
+      [routerLink]="courseId ? ['/courses', courseId, 'classes'] : ['/classes']"
+      class="btn btn-secondary"
+    >
+      <ng-icon name="heroArrowLeft" size="20"></ng-icon>
+      Voltar
+    </a>
+  </div>
+
+  <form [formGroup]="classForm" (ngSubmit)="onSubmit()" class="form">
+    <div class="form-section">
+      <h3>Informações da Turma</h3>
+      <div class="form-group" *ngIf="!courseId">
+        <label for="courseId">Curso</label>
+        <div class="select-wrapper">
+          <select id="courseId" formControlName="courseId">
+            <option value="" disabled>Selecione um curso</option>
+            <option *ngFor="let c of courses" [value]="c.id">
+              {{ c.title }}
+            </option>
+          </select>
+          <ng-icon name="heroChevronDown" class="select-icon"></ng-icon>
+        </div>
+        <span
+          class="error-msg"
+          *ngIf="
+            classForm.get('courseId')?.invalid &&
+            classForm.get('courseId')?.touched
+          "
+        >
+          O curso é obrigatório.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Nome da Turma</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          placeholder="Ex: Turma 2023.1"
+          [class.error]="
+            classForm.get('name')?.invalid && classForm.get('name')?.touched
+          "
+        />
+        <span
+          class="error-msg"
+          *ngIf="
+            classForm.get('name')?.invalid && classForm.get('name')?.touched
+          "
+        >
+          O nome é obrigatório.
+        </span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="startDate">Data de Início</label>
+          <input type="date" id="startDate" formControlName="startDate" />
+        </div>
+
+        <div class="form-group">
+          <label for="endDate">Data de Término</label>
+          <input type="date" id="endDate" formControlName="endDate" />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="classForm.invalid"
+      >
+        {{ isEditMode ? "Salvar Alterações" : "Criar Turma" }}
+      </button>
+    </div>
+  </form>
+</div>

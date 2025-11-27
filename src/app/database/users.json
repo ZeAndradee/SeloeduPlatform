@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Usuário Admin",
+    "email": "admin@seloedu.com",
+    "password": "secret123",
+    "role": "admin",
+    "avatar": "https://ui-avatars.com/api/?name=A&background=2972e8&color=fff"
+  },
+  {
+    "id": 2,
+    "name": "Aluno Exemplo",
+    "email": "student@seloedu.com",
+    "password": "secret123",
+    "role": "student",
+    "avatar": "https://ui-avatars.com/api/?name=E&background=10B981&color=fff"
+  }
+]

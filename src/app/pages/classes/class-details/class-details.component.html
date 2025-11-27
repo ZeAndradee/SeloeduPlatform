@@ -1,0 +1,87 @@
+<div class="container fade-in">
+  <div class="header">
+    <div class="header-content">
+      <h1>{{ classItem?.name }}</h1>
+      <p>{{ course?.title }}</p>
+    </div>
+    <a
+      [routerLink]="['/courses', courseId, 'classes']"
+      class="btn btn-secondary"
+    >
+      <ng-icon name="heroArrowLeft" size="20"></ng-icon>
+      Voltar
+    </a>
+  </div>
+
+  <div class="grid-layout">
+    <div class="main-content">
+      <div class="card">
+        <div class="card-header">
+          <h2>Alunos Matriculados</h2>
+          <span class="badge">{{ students.length }} alunos</span>
+        </div>
+
+        <div class="student-list">
+          <div *ngFor="let student of students" class="student-item">
+            <div class="student-info">
+              <div class="avatar">
+                <ng-icon name="heroUser" size="24"></ng-icon>
+              </div>
+              <div>
+                <h3>{{ student.name }}</h3>
+                <p>{{ student.email }}</p>
+              </div>
+            </div>
+            <button
+              (click)="removeStudent(student.id)"
+              class="btn-icon danger"
+              title="Remover"
+            >
+              <ng-icon name="heroTrash" size="20"></ng-icon>
+            </button>
+          </div>
+
+          <div *ngIf="students.length === 0" class="empty-state">
+            <div class="empty-icon">
+              <ng-icon name="heroUsers" size="32"></ng-icon>
+            </div>
+            <p>Nenhum aluno matriculado nesta turma.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="card">
+        <div class="card-header">
+          <h2>Adicionar Aluno</h2>
+        </div>
+        <div class="add-student-form">
+          <div class="form-group">
+            <label class="input-label">Selecione um aluno</label>
+            <div class="select-wrapper">
+              <select [(ngModel)]="selectedStudentId" class="input-field">
+                <option [ngValue]="null" disabled>Selecione...</option>
+                <option
+                  *ngFor="let student of availableStudents"
+                  [value]="student.id"
+                >
+                  {{ student.name }}
+                </option>
+              </select>
+              <ng-icon name="heroChevronDown" class="select-icon"></ng-icon>
+            </div>
+          </div>
+          <button
+            (click)="addStudent()"
+            [disabled]="!selectedStudentId"
+            class="btn btn-primary full-width"
+          >
+            <ng-icon name="heroPlus" size="20"></ng-icon>
+            Adicionar à Turma
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

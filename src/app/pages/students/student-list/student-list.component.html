@@ -1,0 +1,98 @@
+<div class="page-container">
+  <div class="header">
+    <div class="header-content">
+      <h1 class="title">Alunos</h1>
+      <p class="subtitle">Gerencie os alunos matriculados na plataforma</p>
+    </div>
+    <a routerLink="/students/new" class="btn btn-primary">
+      <ng-icon name="heroPlus" class="icon"></ng-icon>
+      Novo Aluno
+    </a>
+  </div>
+
+  <div class="actions-bar">
+    <div class="search-wrapper">
+      <ng-icon name="heroMagnifyingGlass" class="search-icon"></ng-icon>
+      <input
+        type="text"
+        placeholder="Buscar alunos..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearch($event)"
+        class="search-input"
+      />
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Cursos</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students$ | async">
+            <td>
+              <div class="student-info-cell">
+                <div class="avatar-placeholder small">
+                  <img
+                    *ngIf="student.avatar"
+                    [src]="student.avatar"
+                    alt="Avatar"
+                    class="avatar-img"
+                  />
+                  <ng-icon *ngIf="!student.avatar" name="heroUser"></ng-icon>
+                </div>
+                <span>{{ student.name }}</span>
+              </div>
+            </td>
+            <td>{{ student.email }}</td>
+            <td>
+              <span class="badge-courses">
+                {{ student.enrolledCourseIds?.length || 0 }} Cursos
+              </span>
+            </td>
+            <td>
+              <div class="actions">
+                <a
+                  [routerLink]="['/students/edit', student.id]"
+                  class="btn-icon"
+                  title="Editar"
+                >
+                  <ng-icon name="heroPencilSquare" size="20"></ng-icon>
+                </a>
+                <button
+                  (click)="deleteStudent(student.id)"
+                  class="btn-icon danger"
+                  title="Excluir"
+                >
+                  <ng-icon name="heroTrash" size="20"></ng-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="(students$ | async)?.length === 0">
+            <td colspan="4" class="empty-state-cell">
+              Nenhum aluno encontrado.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="(students$ | async)?.length === 0" class="empty-state">
+    <div class="empty-icon">
+      <ng-icon name="heroUserGroup"></ng-icon>
+    </div>
+    <h3>Nenhum aluno encontrado</h3>
+    <p>Cadastre alunos para que eles possam acessar os cursos.</p>
+    <a routerLink="/students/new" class="btn btn-primary mt-4">
+      Cadastrar Aluno
+    </a>
+  </div>
+</div>

@@ -1,0 +1,131 @@
+<div class="form-container">
+  <div class="header">
+    <div class="header-content">
+      <h1 class="title">{{ isEditMode ? "Editar Aluno" : "Novo Aluno" }}</h1>
+    </div>
+    <a routerLink="/students" class="btn btn-secondary">
+      <ng-icon name="heroArrowLeft" size="20"></ng-icon>
+      Voltar
+    </a>
+  </div>
+
+  <form [formGroup]="studentForm" (ngSubmit)="onSubmit()" class="form">
+    <div class="form-section">
+      <h3>Informações Pessoais</h3>
+      <div class="form-group">
+        <label for="name">Nome Completo</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Ex: João Silva"
+          [class.error]="
+            studentForm.get('name')?.invalid && studentForm.get('name')?.touched
+          "
+        />
+        <span
+          class="error-msg"
+          *ngIf="
+            studentForm.get('name')?.invalid && studentForm.get('name')?.touched
+          "
+        >
+          Nome é obrigatório (mínimo 3 caracteres)
+        </span>
+      </div>
+
+      <div class="form-group" *ngIf="!isEditMode">
+        <label for="password">Senha</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Mínimo 8 caracteres"
+          [class.error]="
+            studentForm.get('password')?.invalid &&
+            studentForm.get('password')?.touched
+          "
+        />
+        <span
+          class="error-msg"
+          *ngIf="
+            studentForm.get('password')?.invalid &&
+            studentForm.get('password')?.touched
+          "
+        >
+          Senha é obrigatória (mínimo 8 caracteres)
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Ex: joao@email.com"
+          [class.error]="
+            studentForm.get('email')?.invalid &&
+            studentForm.get('email')?.touched
+          "
+        />
+        <span
+          class="error-msg"
+          *ngIf="
+            studentForm.get('email')?.invalid &&
+            studentForm.get('email')?.touched
+          "
+        >
+          Email inválido
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="avatar">URL do Avatar (Opcional)</label>
+        <input
+          id="avatar"
+          type="text"
+          formControlName="avatar"
+          placeholder="https://..."
+        />
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Matrículas em Cursos</h3>
+      <p class="section-desc">
+        Selecione os cursos que este aluno terá acesso.
+      </p>
+
+      <div class="courses-list">
+        <div *ngFor="let course of courses$ | async" class="course-item">
+          <label class="checkbox-container">
+            <input
+              type="checkbox"
+              [checked]="isCourseSelected(course.id)"
+              (change)="toggleCourseSelection(course.id, $event)"
+            />
+            <span class="checkmark">
+              <ng-icon name="heroCheck"></ng-icon>
+            </span>
+            <div class="course-details">
+              <span class="course-title">{{ course.title }}</span>
+            </div>
+          </label>
+        </div>
+        <div *ngIf="(courses$ | async)?.length === 0" class="no-courses">
+          Nenhum curso disponível para matrícula.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="studentForm.invalid"
+      >
+        {{ isEditMode ? "Salvar Alterações" : "Cadastrar Aluno" }}
+      </button>
+    </div>
+  </form>
+</div>

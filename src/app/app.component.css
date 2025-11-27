@@ -1,0 +1,86 @@
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  padding-top: 60px;
+}
+
+main.with-sidebar {
+  margin-left: 0;
+}
+
+.mobile-header {
+  height: 60px;
+  background: white;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.menu-btn:active {
+  background-color: var(--background-color);
+}
+
+.brand-name {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+@media (min-width: 769px) {
+  .app-container {
+    flex-direction: row;
+  }
+
+  .mobile-header {
+    display: none;
+  }
+
+  main {
+    padding-top: 0;
+  }
+
+  main.with-sidebar {
+    margin-left: 260px;
+  }
+
+  .sidebar-backdrop {
+    display: none;
+  }
+}

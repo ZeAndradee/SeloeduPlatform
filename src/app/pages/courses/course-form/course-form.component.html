@@ -1,0 +1,146 @@
+<div class="course-form-container">
+  <div class="header">
+    <div class="header-content">
+      <h1 class="title">
+        {{ isEditMode ? "Editar Curso" : "Novo Curso" }}
+      </h1>
+      <p class="subtitle">
+        {{
+          isEditMode
+            ? "Atualize as informações de um "
+            : "Crie e personalize de um novo "
+        }}
+        curso.
+      </p>
+    </div>
+    <a routerLink="/courses" class="btn btn-secondary">
+      <ng-icon name="heroArrowLeft" size="20"></ng-icon>
+      Voltar
+    </a>
+  </div>
+
+  <div class="card form-card">
+    <form [formGroup]="courseForm" (ngSubmit)="onSubmit()" class="form">
+      <div class="form-layout">
+        <div class="form-content">
+          <div class="form-section">
+            <h2 class="section-title">Informações Básicas</h2>
+
+            <div class="form-group">
+              <label for="title" class="label">Título do Curso</label>
+              <div class="input-wrapper">
+                <input
+                  type="text"
+                  id="title"
+                  formControlName="title"
+                  class="input"
+                  placeholder="Ex: Padrões Avançados de Angular"
+                  maxlength="50"
+                  [class.error]="
+                    courseForm.get('title')?.touched &&
+                    courseForm.get('title')?.invalid
+                  "
+                />
+                <div class="char-count">
+                  {{ courseForm.get("title")?.value?.length || 0 }}/50
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  courseForm.get('title')?.touched &&
+                  courseForm.get('title')?.invalid
+                "
+                class="error-message"
+              >
+                <ng-icon
+                  name="heroExclamationCircle"
+                  class="error-icon"
+                ></ng-icon>
+                <span *ngIf="courseForm.get('title')?.errors?.['required']"
+                  >O título é obrigatório</span
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="description" class="label">Descrição</label>
+              <div class="input-wrapper">
+                <textarea
+                  id="description"
+                  formControlName="description"
+                  rows="5"
+                  class="textarea"
+                  placeholder="Descreva o que os alunos irão aprender neste curso..."
+                  maxlength="100"
+                  [class.error]="
+                    courseForm.get('description')?.touched &&
+                    courseForm.get('description')?.invalid
+                  "
+                ></textarea>
+                <div class="char-count">
+                  {{ courseForm.get("description")?.value?.length || 0 }}/100
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  courseForm.get('description')?.touched &&
+                  courseForm.get('description')?.invalid
+                "
+                class="error-message"
+              >
+                <ng-icon
+                  name="heroExclamationCircle"
+                  class="error-icon"
+                ></ng-icon>
+                <span
+                  *ngIf="courseForm.get('description')?.errors?.['required']"
+                  >A descrição é obrigatória</span
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="imageUrl" class="label">URL da Imagem de Capa</label>
+              <div class="input-wrapper">
+                <input
+                  type="text"
+                  id="imageUrl"
+                  formControlName="imageUrl"
+                  class="input"
+                  placeholder="https://exemplo.com/imagem.jpg"
+                />
+              </div>
+              <p class="helper-text">
+                Deixe em branco para usar a imagem padrão.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="preview-column">
+          <div class="preview-section">
+            <h3 class="section-title">Pré-visualização</h3>
+            <div class="preview-container">
+              <app-course-card
+                [course]="previewCourse"
+                [isPreview]="true"
+              ></app-course-card>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <a routerLink="/courses" class="btn btn-secondary">Cancelar</a>
+        <button
+          type="submit"
+          [disabled]="courseForm.invalid"
+          class="btn btn-primary"
+        >
+          <ng-icon name="heroCheck" class="btn-icon"></ng-icon>
+          {{ isEditMode ? "Salvar Alterações" : "Criar Curso" }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

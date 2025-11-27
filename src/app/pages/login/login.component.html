@@ -1,0 +1,77 @@
+<div class="login-container">
+  <div class="login-card card">
+    <div class="login-header">
+      <div class="logo">
+        <img src="seloedu-logo.svg" alt="Seloedu Logo" class="logo-icon" />
+      </div>
+      <h1>Bem-vindo de volta</h1>
+      <p>Entre na sua conta Seloedu</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <label for="email" class="input-label">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="input-field"
+          placeholder="admin@seloedu.com"
+          [class.error]="f['email'].touched && f['email'].errors"
+        />
+        <div
+          *ngIf="f['email'].touched && f['email'].errors"
+          class="error-message"
+        >
+          <span *ngIf="f['email'].errors['required']"
+            >O email é obrigatório</span
+          >
+          <span *ngIf="f['email'].errors['email']"
+            >Por favor, insira um email válido</span
+          >
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="password" class="input-label">Senha</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="input-field"
+          placeholder="••••••••"
+          [class.error]="f['password'].touched && f['password'].errors"
+        />
+        <div
+          *ngIf="f['password'].touched && f['password'].errors"
+          class="error-message"
+        >
+          <span *ngIf="f['password'].errors['required']"
+            >A senha é obrigatória</span
+          >
+        </div>
+      </div>
+
+      <div class="forgot-password">
+        <a routerLink="/forgot-password">Esqueceu a senha?</a>
+      </div>
+
+      <div *ngIf="error" class="alert alert-error">
+        {{ error }}
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary btn-block"
+        [disabled]="loading"
+      >
+        <span *ngIf="loading" class="spinner"></span>
+        <span *ngIf="!loading">Entrar</span>
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>Não tem uma conta? <a href="#">Contate o Suporte</a></p>
+    </div>
+  </div>
+</div>

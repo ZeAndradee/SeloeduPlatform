@@ -1,0 +1,50 @@
+<aside class="sidebar" *ngIf="currentUser$ | async as user">
+  <div class="sidebar-header">
+    <div class="logo-small">
+      <img src="seloedu-logo.svg" alt="Seloedu Logo" class="logo-icon-small" />
+    </div>
+    <span class="brand-name">Seloedu</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+      <ng-icon name="heroHome" class="nav-icon"></ng-icon>
+      Painel
+    </a>
+    <a routerLink="/courses" routerLinkActive="active" class="nav-item">
+      <ng-icon name="heroBookOpen" class="nav-icon"></ng-icon>
+      Cursos
+    </a>
+    <a
+      routerLink="/students"
+      routerLinkActive="active"
+      class="nav-item"
+      *ngIf="user.role === 'admin'"
+    >
+      <ng-icon name="heroUsers" class="nav-icon"></ng-icon>
+      Alunos
+    </a>
+    <a
+      routerLink="/classes"
+      routerLinkActive="active"
+      class="nav-item"
+      *ngIf="user.role === 'admin'"
+    >
+      <ng-icon name="heroAcademicCap" class="nav-icon"></ng-icon>
+      Turmas
+    </a>
+  </nav>
+
+  <div class="user-profile">
+    <img [src]="user.avatar" alt="Avatar do Usuário" class="avatar" />
+    <div class="user-info">
+      <span class="user-name">{{ user.name }}</span>
+      <span class="user-role">{{
+        user.role === "admin" ? "Administrador" : "Aluno"
+      }}</span>
+    </div>
+    <button (click)="logout()" class="logout-btn" title="Sair">
+      <ng-icon name="heroArrowRightOnRectangle"></ng-icon>
+    </button>
+  </div>
+</aside>

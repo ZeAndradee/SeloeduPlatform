@@ -1,0 +1,112 @@
+<div class="container fade-in">
+  <div class="header">
+    <div class="header-content">
+      <h1>Todas as Turmas</h1>
+      <p>Gerencie as turmas de todos os cursos</p>
+    </div>
+    <a routerLink="/classes/new" class="btn btn-primary">
+      <ng-icon name="heroPlus" size="20"></ng-icon>
+      Nova Turma
+    </a>
+  </div>
+
+  <div class="actions-bar">
+    <div class="search-wrapper">
+      <ng-icon name="heroMagnifyingGlass" class="search-icon"></ng-icon>
+      <input
+        type="text"
+        placeholder="Buscar turmas..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearch($event)"
+        class="search-input"
+      />
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Curso</th>
+            <th>Início</th>
+            <th>Fim</th>
+            <th>Alunos</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let classItem of classes">
+            <td>
+              <div class="class-info-cell">
+                <div class="icon-placeholder small">
+                  <ng-icon name="heroAcademicCap"></ng-icon>
+                </div>
+                <span>{{ classItem.name }}</span>
+              </div>
+            </td>
+            <td>{{ classItem.courseName }}</td>
+            <td>{{ classItem.startDate | date : "dd/MM/yyyy" }}</td>
+            <td>{{ classItem.endDate | date : "dd/MM/yyyy" }}</td>
+            <td>
+              <span class="badge-students">
+                {{ classItem.studentIds?.length || 0 }} Alunos
+              </span>
+            </td>
+            <td>
+              <div class="actions">
+                <a
+                  [routerLink]="[
+                    '/courses',
+                    classItem.courseId,
+                    'classes',
+                    classItem.id,
+                    'students'
+                  ]"
+                  class="btn-icon"
+                  title="Gerenciar Alunos"
+                >
+                  <ng-icon name="heroUsers" size="20"></ng-icon>
+                </a>
+                <a
+                  [routerLink]="[
+                    '/courses',
+                    classItem.courseId,
+                    'classes',
+                    classItem.id,
+                    'edit'
+                  ]"
+                  class="btn-icon"
+                  title="Editar"
+                >
+                  <ng-icon name="heroPencil" size="20"></ng-icon>
+                </a>
+                <button
+                  (click)="classItem.id && deleteClass(classItem.id)"
+                  class="btn-icon danger"
+                  title="Excluir"
+                >
+                  <ng-icon name="heroTrash" size="20"></ng-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="classes.length === 0">
+            <td colspan="6" class="empty-state-cell">
+              Nenhuma turma encontrada.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="classes.length === 0" class="empty-state">
+    <div class="empty-icon">
+      <ng-icon name="heroAcademicCap" size="48"></ng-icon>
+    </div>
+    <h3>Nenhuma turma encontrada</h3>
+    <p>Crie uma nova turma para começar.</p>
+  </div>
+</div>

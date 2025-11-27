@@ -1,0 +1,53 @@
+<div
+  class="card course-card"
+  [routerLink]="isPreview ? null : ['/courses/edit', course.id]"
+  [style.cursor]="isPreview ? 'default' : 'pointer'"
+>
+  <div
+    class="course-image"
+    [style.background-image]="
+      course.imageUrl ? 'url(' + course.imageUrl + ')' : ''
+    "
+  >
+    <div class="placeholder-icon" *ngIf="!course.imageUrl">
+      <ng-icon name="heroBookOpen"></ng-icon>
+    </div>
+  </div>
+  <div class="course-content">
+    <div class="card-header">
+      <span
+        class="badge"
+        [class.badge-admin]="userRole === 'admin'"
+        [class.badge-enrolled]="isEnrolled"
+        [class.badge-not-enrolled]="!isEnrolled && userRole === 'student'"
+      >
+        {{
+          userRole === "admin"
+            ? "Ativo"
+            : isEnrolled
+            ? "Matriculado"
+            : "Disponível"
+        }}
+      </span>
+      <span *ngIf="userRole === 'admin'" class="student-count">
+        <ng-icon name="heroUsers" class="icon-small"></ng-icon>
+        {{ (studentCount$ | async) || 0 }} alunos
+      </span>
+    </div>
+    <h3>{{ course.title || "Título do Curso" }}</h3>
+    <p>{{ course.description || "Descrição do curso..." }}</p>
+
+    <div class="progress-container" *ngIf="userRole === 'student'">
+      <div class="progress-info">
+        <span class="progress-text">Progresso</span>
+        <span class="progress-percentage">{{ course.progress || 0 }}%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="course.progress || 0"></div>
+      </div>
+    </div>
+    <div class="card-actions-wrapper" (click)="$event.stopPropagation()">
+      <ng-content select="[actions]"></ng-content>
+    </div>
+  </div>
+</div>

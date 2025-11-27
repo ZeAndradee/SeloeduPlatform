@@ -1,0 +1,24 @@
+<div class="app-container">
+  <!-- Mobile Header -->
+  <header class="mobile-header" *ngIf="authService.currentUser$ | async">
+    <button class="menu-btn" (click)="toggleSidebar()">
+      <ng-icon name="heroBars3"></ng-icon>
+    </button>
+    <span class="brand-name">SeloEdu</span>
+  </header>
+
+  <div
+    class="sidebar-backdrop"
+    *ngIf="isSidebarOpen"
+    (click)="closeSidebar()"
+  ></div>
+
+  <app-sidebar
+    *ngIf="authService.currentUser$ | async"
+    [class.mobile-open]="isSidebarOpen"
+  ></app-sidebar>
+
+  <main [class.with-sidebar]="authService.currentUser$ | async">
+    <router-outlet></router-outlet>
+  </main>
+</div>

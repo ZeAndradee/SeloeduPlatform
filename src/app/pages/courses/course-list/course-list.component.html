@@ -1,0 +1,64 @@
+<div class="course-list-container" *ngIf="currentUser$ | async as user">
+  <div class="header">
+    <div class="header-content">
+      <h1 class="title">Cursos</h1>
+      <p class="subtitle">Gerencie os cursos disponíveis na plataforma</p>
+    </div>
+    <a
+      routerLink="/courses/new"
+      class="btn btn-primary"
+      *ngIf="user.role === 'admin'"
+    >
+      <ng-icon name="heroPlus" class="icon"></ng-icon>
+      Novo Curso
+    </a>
+  </div>
+
+  <div class="course-grid">
+    <app-course-card
+      *ngFor="let course of courses$ | async"
+      [course]="course"
+      [user]="user"
+      [userRole]="user.role"
+    >
+      <div actions class="card-actions" *ngIf="user.role === 'admin'">
+        <a
+          [routerLink]="['/courses', course.id, 'classes']"
+          class="btn-icon btn-edit"
+          title="Gerenciar Turmas"
+        >
+          <ng-icon name="heroUsers"></ng-icon>
+        </a>
+        <a
+          [routerLink]="['/courses/edit', course.id]"
+          class="btn-icon btn-edit"
+          title="Editar"
+        >
+          <ng-icon name="heroPencilSquare"></ng-icon>
+        </a>
+        <button
+          (click)="deleteCourse(course.id)"
+          class="btn-icon btn-delete"
+          title="Excluir"
+        >
+          <ng-icon name="heroTrash"></ng-icon>
+        </button>
+      </div>
+    </app-course-card>
+  </div>
+
+  <div *ngIf="(courses$ | async)?.length === 0" class="empty-state">
+    <div class="empty-icon">
+      <ng-icon name="heroBookOpen"></ng-icon>
+    </div>
+    <h3>Nenhum curso encontrado</h3>
+    <p>Comece criando seu primeiro curso para disponibilizar aos alunos.</p>
+    <a
+      routerLink="/courses/new"
+      class="btn btn-primary mt-4"
+      *ngIf="user.role === 'admin'"
+    >
+      Criar Curso
+    </a>
+  </div>
+</div>
