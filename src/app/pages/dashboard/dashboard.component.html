@@ -5,7 +5,7 @@
   </header>
 
   <div class="stats-grid">
-    <div class="card stat-card">
+    <div class="card stat-card" routerLink="/courses">
       <div class="stat-icon bg-indigo">
         <ng-icon name="heroBookOpen"></ng-icon>
       </div>
@@ -15,7 +15,11 @@
       </div>
     </div>
 
-    <div class="card stat-card" *ngIf="user.role === 'admin'">
+    <div
+      class="card stat-card"
+      *ngIf="user.role === 'admin'"
+      routerLink="/students"
+    >
       <div class="stat-icon bg-emerald">
         <ng-icon name="heroUsers"></ng-icon>
       </div>
@@ -25,7 +29,11 @@
       </div>
     </div>
 
-    <div class="card stat-card" *ngIf="user.role === 'admin'">
+    <div
+      class="card stat-card"
+      *ngIf="user.role === 'admin'"
+      routerLink="/classes"
+    >
       <div class="stat-icon bg-orange">
         <ng-icon name="heroAcademicCap"></ng-icon>
       </div>

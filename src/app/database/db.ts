@@ -11,8 +11,8 @@ export class AppDatabase extends Dexie {
 
   constructor() {
     super('SeloeduDatabase');
-    this.version(3).stores({
-      users: '++id, email, *enrolledCourseIds, *classIds',
+    this.version(4).stores({
+      users: '++id, email, role, *enrolledCourseIds, *classIds',
       courses: '++id, title',
       classes: '++id, courseId, *studentIds',
     });

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +16,7 @@ import {
   heroArrowLeft,
   heroChevronDown,
 } from '@ng-icons/heroicons/outline';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-class-details',
@@ -33,7 +34,7 @@ import {
   templateUrl: './class-details.component.html',
   styleUrls: ['./class-details.component.css'],
 })
-export class ClassDetailsComponent implements OnInit {
+export class ClassDetailsComponent implements OnInit, OnDestroy {
   classItem!: Class;
   course!: Course;
   students: User[] = [];
@@ -41,6 +42,7 @@ export class ClassDetailsComponent implements OnInit {
   selectedStudentId: number | null = null;
   courseId!: number;
   classId!: number;
+  private studentsSubscription?: Subscription;
 
   constructor(
     private classService: ClassService,
@@ -62,6 +64,12 @@ export class ClassDetailsComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.studentsSubscription) {
+      this.studentsSubscription.unsubscribe();
+    }
+  }
+
   loadData() {
     this.courseService.getCourse(this.courseId).subscribe((course) => {
       if (course) this.course = course;
@@ -76,15 +84,21 @@ export class ClassDetailsComponent implements OnInit {
   }
 
   loadStudents() {
-    this.userService.getUsers().subscribe((users) => {
-      const allStudents = users.filter((u) => u.role === 'student');
-      const enrolledIds = this.classItem.studentIds || [];
+    if (this.studentsSubscription) {
+      this.studentsSubscription.unsubscribe();
+    }
 
-      this.students = allStudents.filter((s) => enrolledIds.includes(s.id));
-      this.availableStudents = allStudents.filter(
-        (s) => !enrolledIds.includes(s.id)
-      );
-    });
+    this.studentsSubscription = this.userService
+      .getUsers()
+      .subscribe((users) => {
+        const allStudents = users.filter((u) => u.role === 'student');
+        const enrolledIds = this.classItem.studentIds || [];
+
+        this.students = allStudents.filter((s) => enrolledIds.includes(s.id));
+        this.availableStudents = allStudents.filter(
+          (s) => !enrolledIds.includes(s.id)
+        );
+      });
   }
 
   addStudent() {

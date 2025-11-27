@@ -5,6 +5,7 @@ import { CourseListComponent } from './pages/courses/course-list/course-list.com
 import { CourseFormComponent } from './pages/courses/course-form/course-form.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { adminGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -13,8 +14,16 @@ export const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'courses', component: CourseListComponent },
-  { path: 'courses/new', component: CourseFormComponent },
-  { path: 'courses/edit/:id', component: CourseFormComponent },
+  {
+    path: 'courses/new',
+    component: CourseFormComponent,
+    canActivate: [adminGuard],
+  },
+  {
+    path: 'courses/edit/:id',
+    component: CourseFormComponent,
+    canActivate: [adminGuard],
+  },
   {
     path: 'students',
     loadComponent: () =>
@@ -24,6 +33,7 @@ export const routes: Routes = [
   },
   {
     path: 'students/new',
+    canActivate: [adminGuard],
     loadComponent: () =>
       import('./pages/students/student-form/student-form.component').then(
         (m) => m.StudentFormComponent
@@ -31,6 +41,7 @@ export const routes: Routes = [
   },
   {
     path: 'students/edit/:id',
+    canActivate: [adminGuard],
     loadComponent: () =>
       import('./pages/students/student-form/student-form.component').then(
         (m) => m.StudentFormComponent
@@ -45,6 +56,7 @@ export const routes: Routes = [
   },
   {
     path: 'classes/new',
+    canActivate: [adminGuard],
     loadComponent: () =>
       import('./pages/classes/class-form/class-form.component').then(
         (m) => m.ClassFormComponent
@@ -52,6 +64,7 @@ export const routes: Routes = [
   },
   {
     path: 'classes/:classId/edit',
+    canActivate: [adminGuard],
     loadComponent: () =>
       import('./pages/classes/class-form/class-form.component').then(
         (m) => m.ClassFormComponent
@@ -66,6 +79,7 @@ export const routes: Routes = [
   },
   {
     path: 'courses/:courseId/classes/new',
+    canActivate: [adminGuard],
     loadComponent: () =>
       import('./pages/classes/class-form/class-form.component').then(
         (m) => m.ClassFormComponent
@@ -73,6 +87,7 @@ export const routes: Routes = [
   },
   {
     path: 'courses/:courseId/classes/:classId/edit',
+    canActivate: [adminGuard],
     loadComponent: () =>
       import('./pages/classes/class-form/class-form.component').then(
         (m) => m.ClassFormComponent

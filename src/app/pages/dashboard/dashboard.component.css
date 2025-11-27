@@ -37,11 +37,13 @@
   padding: 1.5rem;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
 }
 
 .stat-card:hover {
   box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .stat-icon {

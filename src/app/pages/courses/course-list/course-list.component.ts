@@ -11,6 +11,7 @@ import {
   heroPlus,
   heroBookOpen,
   heroUser,
+  heroUsers,
 } from '@ng-icons/heroicons/outline';
 import { CourseCardComponent } from '../../../components/course-card/course-card.component';
 
@@ -28,6 +29,7 @@ import { User } from '../../../models/user.model';
       heroPlus,
       heroBookOpen,
       heroUser,
+      heroUsers,
     }),
   ],
   templateUrl: './course-list.component.html',
