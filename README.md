@@ -102,5 +102,5 @@ A aplicação está estruturada nas seguintes rotas principais:
 
 Os dados são reiniciados se você limpar o armazenamento do navegador (Application > Clear Site Data).
 
-- **Admin**: `admin@seloedu.com` (Senha: `12345678`)
-- **Aluno**: `student@seloedu.com` (Senha: `12345678`)
+- **Admin**: `admin@seloedu.com` (Senha: `secret123`)
+- **Aluno**: `student@seloedu.com` (Senha: `secret123`)
